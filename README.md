@@ -1,1 +1,0 @@
-# ecoplant.local

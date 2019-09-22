@@ -1,5 +1,4 @@
 <?php include(ROOT . '/views/layout/header.php'); ?>
-
     <div class="row">
         <h5>Добавить группу объектов</h5>
     </div>
@@ -54,7 +53,7 @@
                 <div class="row">
                     <div class="col s12"><h5>Объекты</h5></div>
                     <div class="input-field col s11">
-                        <select id="selectObject">
+                        <select id="selectObject" name="selectObject">
                             <?php
                             if ($objectListSQL) {
                                 while ($row = $objectListSQL->fetch()) {

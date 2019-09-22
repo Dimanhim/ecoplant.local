@@ -29,10 +29,10 @@
             </div>
             <div class="search_autocomplete"></div>
         </form>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="<?php echo PATH; ?>/imycopathogen.php" class="link1">Микопатогены</a></li>
-            <li><a href="<?php echo PATH; ?>/pesticide" class="link1">Пестициды</a></li>
-        </ul>
+        <!--<ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="<?php //echo PATH; ?>/imycopathogen.php" class="link1">Микопатогены</a></li>
+            <li><a href="<?php //echo PATH; ?>/pesticide" class="link1">Пестициды</a></li>
+        </ul>-->
     </div>
 </nav>
 <main>

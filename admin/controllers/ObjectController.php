@@ -74,7 +74,7 @@ class ObjectController {
             $idProductClass = $_POST['clproduct'];
             $idObjectList = $_POST['selectObject'];
 
-            if (ObjectGroup::add($idProductClass, $nameRus, $nameEng)) {
+            if (ObjectGroup::add($idProductClass, $idObjectList, 'Группа объектов', 'Group')) {
                 $idObjectGroup = ObjectGroup::getId($idProductClass, $nameRus, $nameEng);
 
                 for ($i = 0; $i < count($idObjectList); $i++) {

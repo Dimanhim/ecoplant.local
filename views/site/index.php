@@ -1,5 +1,4 @@
 <?php include (ROOT . '/views/layout/header.php'); ?>
-
     <div class="row"></div>
     <div class="row card-container">
         <div class="col s12 m6 l3">

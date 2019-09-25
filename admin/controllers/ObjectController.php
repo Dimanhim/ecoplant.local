@@ -66,15 +66,16 @@ class ObjectController {
         $idProductClass = false;
         $idObjectList = false;
 
-        if (isset($_POST['rnamegrobject']) && isset($_POST['engnamegrobject']) &&
-            isset($_POST['clproduct']) && isset($_POST['selectObject'])) {
+        if (isset($_POST['rnamegrobject']) && isset($_POST['clproduct']) && isset($_POST['selectObject'])) {
 
             $nameRus = $_POST["rnamegrobject"];
-            $nameEng = $_POST["engnamegrobject"];
+            if(isset($_POST["engnamegrobject"])) $nameEng = $_POST["engnamegrobject"];
+            else $nameEng = '';
+            
             $idProductClass = $_POST['clproduct'];
             $idObjectList = $_POST['selectObject'];
 
-            if (ObjectGroup::add($idProductClass, $idObjectList, 'Группа объектов', 'Group')) {
+            if (ObjectGroup::add($idProductClass, $nameRus, $nameEng)) {
                 $idObjectGroup = ObjectGroup::getId($idProductClass, $nameRus, $nameEng);
 
                 for ($i = 0; $i < count($idObjectList); $i++) {

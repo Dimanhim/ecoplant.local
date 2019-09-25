@@ -58,12 +58,12 @@ class ObjectGroup
         return false;
     }
 
-    public static function add($idProductClass, $idClobObject, $nameRus, $nameEng)
+    public static function add($idProductClass, $nameRus, $nameEng)
     {
         $db = Db::getConnection();
 
         $sql = "INSERT INTO `object_group`(`id_clproduct`, `id_clobject`, `grobject_name_rus`, `grobject_name_eng`) 
-                        VALUES ($idProductClass, $idClobObject, '".$nameRus."', '".$nameEng."')";
+                        VALUES ($idProductClass, 0, '".$nameRus."', '".$nameEng."')";
 
         $result = $db->prepare($sql);
         $result->bindParam(':idProductClass', $idProductClass, PDO::PARAM_INT);

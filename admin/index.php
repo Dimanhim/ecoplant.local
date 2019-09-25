@@ -4,9 +4,9 @@
 // Общие настройки
 
 // Debug
-/*ini_set('display_errors', 1);
-ini_set('error_reporting',2047);
-error_reporting(E_ALL);*/
+//ini_set('display_errors', 1);
+//ini_set('error_reporting',2047);
+error_reporting(E_ALL);
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -17,6 +17,7 @@ ini_set('display_startup_errors', 1);
 session_start();
 
 define('ROOT', __DIR__);
+//define('ROOT', '/www.agro.ecoplant.org/');
 define('PATH', str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']));
 
 require_once(ROOT . '/config/params.php');

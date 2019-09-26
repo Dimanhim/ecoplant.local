@@ -1,5 +1,13 @@
 <?php include (ROOT . '/views/layout/header.php'); ?>
-
+<?php 
+/*
+//-------------------------------------Меняем 0 на 1
+    $db = Db::getConnection();
+    $sql = 'UPDATE `product` SET `id_typeproduct`=1 WHERE `id_typeproduct` = 0';
+    $result = $db->prepare($sql);
+    $result->execute();
+*/
+ ?>
     <div class="row">
         <h5>Добавить препарат в БД</h5>
     </div>
@@ -49,6 +57,20 @@
                             if ($productClassListSQL) {
                                 while ($row = $productClassListSQL->fetch()) {
                                     echo "<option value = " . $row["id_clproduct"] . ">" . $row["name_clproduct_rus"] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <select name="PesticideClass">
+                            <option value="" disabled selected>Выберите тип пестицида</option>
+                            <?php
+                            if ($pesticideListSQL) {
+                                while ($row = $pesticideListSQL->fetch()) {
+                                    echo "<option value = " . $row["id_typeproduct"] . ">" . $row["name_product_type"] . "</option>";
                                 }
                             }
                             ?>

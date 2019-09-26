@@ -2,6 +2,7 @@
 
 class ProductController {
     public function actionAdd() {
+
         Admin::checkSignInAccess();
         if (!UserGroup::accessAdminBlockByIdUser(ACCESS_PRODUCT_FUNC, User::getId())) {
             Admin::accessDenied();
@@ -24,12 +25,13 @@ class ProductController {
             $nameProductRus = $_POST['name_product_rus'];
             $idProductClass = $_POST['ProductClass'];
             $idManufacture = $_POST['manufacture'];
+            $idTypePesticide = $_POST['PesticideClass'];
             $idProductSolution = $_POST['solution'];
             $idPackAndTaraList = $_POST['tara_ids'];
             $idLetter = $_POST['id_letter'];
 
-            if (Product::add($idManufacture, $idProductClass, $nameProductRus, $idProductSolution, $idLetter)) {
-                $idProduct = Product::getId($idManufacture, $idProductClass, $nameProductRus, $idProductSolution, $idLetter);
+            if (Product::add($idManufacture, $idProductClass, $nameProductRus, $idProductSolution, $idLetter, $idTypePesticide)) {
+                $idProduct = Product::getId($idManufacture, $idProductClass, $nameProductRus, $idProductSolution, $idLetter, $idTypePesticide);
 
                 if ($idProduct) {
                     for ($i = 0; $i < count($idPackAndTaraList); $i++) {
@@ -50,6 +52,7 @@ class ProductController {
 
         $manufactureListSQL = Manufacture::getListSQL();
         $productClassListSQL = ProductClass::getListSQL();
+        $pesticideListSQL = ProductClass::getListPesticideSQL();
         $rusLetterListSQL = Letter::getRusListSQL();
         $solutionListSQL = Solution::getListSQL();
         $packAndTaraListSQL = PackAndTara::getListSQL();

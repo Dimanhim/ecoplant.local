@@ -42,22 +42,23 @@ class Product
         return false;
     }
 
-    public static function add($idManufacture, $idClProduct, $nameProductRus, $idProductSolution, $idAlphabetRus)
+    public static function add($idManufacture, $idClProduct, $nameProductRus, $idProductSolution, $idAlphabetRus, $idTypePesticide)
     {
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO `product` (id_manufacture, id_clproduct, name_product_rus, id_product_solution, id_alphabet_rus) 
-                VALUES (:idManufacture, :idClProduct, :nameProductRus, :idProductSolution, :idAlphabetRus);';
+        $sql = 'INSERT INTO `product` (id_manufacture, id_clproduct, name_product_rus, id_product_solution, id_alphabet_rus, id_typeproduct) 
+                VALUES (:idManufacture, :idClProduct, :nameProductRus, :idProductSolution, :idAlphabetRus, :idTypePesticide);';
         $result = $db->prepare($sql);
         $result->bindParam(':idManufacture', $idManufacture, PDO::PARAM_INT);
         $result->bindParam(':idClProduct', $idClProduct, PDO::PARAM_INT);
         $result->bindParam(':nameProductRus', $nameProductRus, PDO::PARAM_STR);
         $result->bindParam(':idProductSolution', $idProductSolution, PDO::PARAM_INT);
         $result->bindParam(':idAlphabetRus', $idAlphabetRus, PDO::PARAM_INT);
+        $result->bindParam(':idTypePesticide', $idTypePesticide, PDO::PARAM_INT);
 
         return $result->execute();
     }
-    public static function getId($idManufacture, $idClProduct, $nameProductRus, $idProductSolution, $idAlphabetRus)
+    public static function getId($idManufacture, $idClProduct, $nameProductRus, $idProductSolution, $idAlphabetRus, $idTypePesticide)
     {
         $db = Db::getConnection();
 
@@ -65,7 +66,7 @@ class Product
                         FROM `product` 
                         WHERE `id_manufacture` = :idManufacture AND `id_clproduct` = :idClProduct
                         AND `name_product_rus` = :nameProductRus AND `id_product_solution` = :idProductSolution
-                        AND `id_alphabet_rus` = :idAlphabetRus
+                        AND `id_alphabet_rus` = :idAlphabetRus AND `id_typeproduct`= :idTypePesticide
                         LIMIT 1;';
         $result = $db->prepare($sql);
         $result->bindParam(':idManufacture', $idManufacture, PDO::PARAM_INT);
@@ -73,6 +74,7 @@ class Product
         $result->bindParam(':nameProductRus', $nameProductRus, PDO::PARAM_STR);
         $result->bindParam(':idProductSolution', $idProductSolution, PDO::PARAM_INT);
         $result->bindParam(':idAlphabetRus', $idAlphabetRus, PDO::PARAM_INT);
+        $result->bindParam(':idTypePesticide', $idTypePesticide, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount()) {

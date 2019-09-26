@@ -23,6 +23,20 @@ class ProductClass
 
         return false;
     }
+    public static function getListPesticideSQL($orderField = false)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT * FROM `product_type`';
+        $result = $db->prepare($sql);
+        $result->execute();
+
+        if ($result->rowCount()) {
+            return $result;
+        }
+
+        return false;
+    }
 
     public static function getNameById($idProductClass)
     {

@@ -11,7 +11,11 @@ class RegData
                 JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `culture` ON `culture`.`id_culture` = `regdata`.`id_culture`
                 WHERE `product_and_regdata`.`id_product` = :idProduct
-                GROUP BY `regdata`.`id_culture`;';
+                GROUP BY `regdata`.`id_culture`, `culture`.`name_rus`, `min_rate`, `max_rate`, `description`, `waiting_period`, `maxtimes`, `date4machine`, `date4people`';
+/*
+//------------Убрал из запроса последнюю строку и заработало
+GROUP BY `regdata`.`id_culture`;
+*/
         $result = $db->prepare($sql);
         $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
         $result->execute();

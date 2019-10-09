@@ -173,7 +173,11 @@ $(document).ready(function(){
             var value = $(this).val();
             $(this).parent().append($('#selectObject option[value="' + value + '"]').text());
         });
-        // Добавление объектов
+        $('[name="selectObject2[]"]').each(function() {
+            var value = $(this).val();
+            $(this).parent().append($('#selectObject2 option[value="' + value + '"]').text());
+        });
+        // Добавление группы объектов
         $('.objectListAdd').click(function() {
             var name = 'selectObject[]';
             var value = $("#selectObject").val();
@@ -181,6 +185,20 @@ $(document).ready(function(){
 
             if ($('[name^="selectObject"][value="' + value + '"]').length == 0) {
                 $(".objectList").append(
+                    '<div class="chip">\
+                        <input type="hidden" name="' + name + '" value="' + value + '">' + text + '\
+                <i class="close material-icons">close</i>\
+            </div>');
+            }
+        });
+        // Добавление объектов
+        $('.objectListAdd2').click(function() {
+            var name = 'selectObject2[]';
+            var value = $("#selectObject2").val();
+            var text = $("#selectObject2 option[value='" + value + "']").text();
+
+            if ($('[name^="selectObject2"][value="' + value + '"]').length == 0) {
+                $(".objectList2").append(
                     '<div class="chip">\
                         <input type="hidden" name="' + name + '" value="' + value + '">' + text + '\
                 <i class="close material-icons">close</i>\

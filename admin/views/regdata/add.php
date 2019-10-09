@@ -148,7 +148,7 @@
             </div>
 
             <div class="row">
-                <div class="col s12"><h5>Вредные объекты</h5></div>
+                <div class="col s12"><h5>Группа вредных объектов</h5></div>
                 <div class="input-field col s11">
                     <select id="selectObject">
                         <?php
@@ -172,6 +172,39 @@
                         for ($i = 0; $i < count($idObjectList); $i++) { ?>
                             <div class="chip">
                                 <input type="hidden" name="selectObject[]" value="<?php echo $idObjectList[$i]; ?>">
+                                <i class="close material-icons">close</i>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12"><h5>Вредные объекты</h5></div>
+                <div class="input-field col s11">
+                    <select id="selectObject2">
+                        <?php
+                        if ($objectGroupListSQL2) {
+                            while($row = $objectGroupListSQL2->fetch()) { ?>
+                                <option value="<?php echo $row['id_object']; ?>"><?php
+                                    echo $row['rnameobject'];
+                                    ?></option>
+                                <?php
+                            }
+                        } ?>
+                    </select>
+                </div>
+                <div class="input-field col s1">
+                    <a class="btn light-blue darken-2 objectListAdd2"><i class="material-icons">add</i></a>
+                </div>
+                <div class="col s12 objectList2">
+                    <div class="chip light-blue darken-2 white-text">Добавленные вредные объекты:</div>
+                    <?php
+                    if ($idObjectList2) {
+                        for ($i = 0; $i < count($idObjectList2); $i++) { ?>
+                            <div class="chip">
+                                <input type="hidden" name="selectObject2[]" value="<?php echo $idObjectList2[$i]; ?>">
                                 <i class="close material-icons">close</i>
                             </div>
                             <?php

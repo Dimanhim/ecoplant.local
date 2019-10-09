@@ -32,6 +32,22 @@ class Object {
 
         return $result->execute();
     }
+    public static function getListByIdProductClassSQL($idProductClass) {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT `id_object`, `id_grobject`, `rnameobject` 
+                FROM `object` 
+                WHERE `id_clobject` = :idProductClass;';
+        $result = $db->prepare($sql);
+        $result->bindParam(':idProductClass', $idProductClass, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount()) {
+            return $result;
+        }
+
+        return false;
+    }
 
     public static function getId($nameObjectRus, $nameObjectEng, $idObjectClass) {
         $db = Db::getConnection();

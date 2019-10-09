@@ -64,6 +64,18 @@ class RegData
 
         return $result->execute();
     }
+    public static function addAndObjectGroup2($idRegData, $idObjectGroup)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'INSERT INTO `regdata_and_object`(`id_regdata`, `id_grobject`) 
+                VALUES (:idRegData, :idObjectGroup)';
+        $result = $db->prepare($sql);
+        $result->bindParam(':idRegData', $idRegData, PDO::PARAM_INT);
+        $result->bindParam(':idObjectGroup', $idObjectGroup, PDO::PARAM_INT);
+
+        return $result->execute();
+    }
     public static function deleteAndObjectGroupAll($idRegData)
     {
         $db = Db::getConnection();

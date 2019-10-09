@@ -32,6 +32,7 @@ class RegDataController
         $idProduct = false;
         $idCultureList = false;
         $idObjectList = false;
+        $idObjectList2 = false;
         $min_prim = false;
         $max_prim = false;
         $desc = false;
@@ -68,6 +69,9 @@ class RegDataController
             // ID выбранных вредных объектов
             if (isset($_POST['selectObject']) && is_array($_POST['selectObject'])) {
                 $idObjectList = $_POST['selectObject'];
+            }
+            if (isset($_POST['selectObject2']) && is_array($_POST['selectObject2'])) {
+                $idObjectList2 = $_POST['selectObject2'];
             }
 
             // Нормы примененеия
@@ -194,6 +198,11 @@ class RegDataController
                                 RegData::addAndObjectGroup($idRegData, $idObjectList[$j]);
                             }
                         }
+                        if ($idObjectList2) {
+                            for ($j = 0; $j < count($idObjectList2); $j++) {
+                                RegData::addAndObjectGroup2($idRegData, $idObjectList2[$j]);
+                            }
+                        }
                     }
                 }
 
@@ -238,6 +247,7 @@ class RegDataController
         $productListSQL = Product::getListSQL();
         $cultureListSQL = Culture::getListSQL();
         $objectGroupListSQL = ObjectGroup::getListByIdProductClassSQL(2);
+        $objectGroupListSQL2 = Object::getListByIdProductClassSQL(2);
 
         require_once(ROOT . '/views/regdata/add.php');
         return true;

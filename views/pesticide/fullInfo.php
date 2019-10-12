@@ -110,7 +110,7 @@
                         <ul class="collection">
                             <li class="collection-item">
                                 <div class="row info">
-                                    <div class="col s6"><?php echo $concentration . ' ' . $rnamesubstunit; ?></div>
+                                    <div class="col s6"><?php echo RegData::getNumberToString($concentration). ' ' . $rnamesubstunit; ?></div>
                                     <div class="col s6"><?php echo '<a href="' . PATH . '/substance/full-info/id-substance-' . $id_substance . '">' . $rnamesubstance . '</a>'; ?></div>
                                 </div>
                             </li>
@@ -177,12 +177,20 @@
                     <?php
                     while ($rowprodsubst = $regDataCultureList->fetch()) { ?>
                         <tr>
-                            <td colspan="7" class="title-table"><?php
-                                echo $rowprodsubst["name_rus"];
-                                $namesObject = RegData::getListByIdProductAndIdCultureContainObject($idProduct, $rowprodsubst['id_culture']);
+                            <td colspan="7" class="title-table">
+                                <?php
+                                    echo $rowprodsubst["name_rus"]."<br />";
+                                    $namesObject = RegData::getListByIdProductAndIdCultureContainObject($idProduct, $rowprodsubst['id_culture']);
                                 if ($namesObject) { ?>
-                                    <span class="object-list-name"><br><?php echo $namesObject; ?></span><?php
-                                } ?></td>
+                                    <span class="object-list-name"><br><?php echo $namesObject; ?></span>
+                                <?php } ?>
+                                <br />
+                                <?php
+                                    $namesGroupObject = RegData::getListByIdProductAndIdCultureContainGroupObject($idProduct, $rowprodsubst['id_culture']);
+                                if ($namesGroupObject) { ?>
+                                    <span class="object-list-name"><br><?php echo $namesGroupObject; ?></span>
+                                <?php } ?>
+                            </td>
                         </tr>
                         <tr>
                             <td class="center"><?php echo $rowprodsubst["description"]; ?></td>

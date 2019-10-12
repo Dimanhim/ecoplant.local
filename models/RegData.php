@@ -48,6 +48,82 @@ GROUP BY `regdata`.`id_culture`;
 
         return false;
     }
+    public static function getListByIdProductAndIdCultureContainGroupObject($idProduct, $idCulture)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT GROUP_CONCAT(DISTINCT `object`.`rnameobject` ORDER BY `object`.`rnameobject` ASC SEPARATOR ", ") as "names"
+                FROM `product_and_regdata`
+                JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
+                JOIN `regdata_and_object` ON `regdata_and_object`.`id_regdata` = `regdata`.`id_regdata`
+                JOIN `object` ON `object`.`id_object` = `regdata_and_object`.`id_object`
+                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture;';
+        $result = $db->prepare($sql);
+        $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+        $result->bindParam(':idCulture', $idCulture, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount()) {
+            return $result->fetch()['names'];
+        }
+
+        return false;
+    }
+    public static function getNumberToString($number)
+    {
+        $length = strlen($number);
+        if($length > 9) {
+            $num_start = substr($number, 0,$length - 9);
+            $num = substr($number, -9);
+        }
+        elseif($length > 6) {
+            $num_start = substr($number, 0,$length - 6);
+            $num = substr($number, -6);
+        }
+        elseif($length > 3) {
+            $num_start = substr($number, 0,$length - 3);
+            $num = substr($number, -3);
+        }
+        else $num = $number;
+
+        $match_1 = array("/000/", "тыс.");
+        $match_2 = array("/000000/", "млн.");
+        $match_3 = array("/000000000/", "млрд.");
+        if(preg_match($match_3[0], $num)) {
+            return $num_start." ".preg_replace($match_3[0], $match_3[1], $num);
+        }
+        if(preg_match($match_2[0], $num)) {
+            return $num_start." ".preg_replace($match_2[0], $match_2[1], $num);
+        }
+        if(preg_match($match_1[0], $num)) {
+            return $num_start." ".preg_replace($match_1[0], $match_1[1], $num);
+        }
+        return $number;
+    }
+/*
+    public static function getListByIdProductAndIdCultureContainObject($idProduct, $idCulture)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'SELECT GROUP_CONCAT(DISTINCT `object_group`.`grobject_name_rus` ORDER BY `object_group`.`grobject_name_rus` ASC SEPARATOR ", ") as "names"
+                FROM `product_and_regdata`
+                JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
+                JOIN `regdata_and_grobject` ON `regdata_and_grobject`.`id_regdata` = `regdata`.`id_regdata`
+                JOIN `object_group` ON `object_group`.`id_grobject` = `regdata_and_grobject`.`id_grobject`
+                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture;';
+        $result = $db->prepare($sql);
+        $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
+        $result->bindParam(':idCulture', $idCulture, PDO::PARAM_INT);
+        $result->execute();
+
+        if ($result->rowCount()) {
+            return $result->fetch()['names'];
+        }
+
+        return false;
+    }
+*/
+
 
     public static function getListByIdProductAndIdCultureSQL($idProduct, $idCulture) {
         $db = Db::getConnection();

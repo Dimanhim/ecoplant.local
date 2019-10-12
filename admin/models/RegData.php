@@ -64,15 +64,15 @@ class RegData
 
         return $result->execute();
     }
-    public static function addAndObjectGroup2($idRegData, $idObjectGroup)
+    public static function addAndObjectGroup2($idRegData, $idObject)
     {
         $db = Db::getConnection();
 
-        $sql = 'INSERT INTO `regdata_and_object`(`id_regdata`, `id_grobject`) 
-                VALUES (:idRegData, :idObjectGroup)';
+        $sql = 'INSERT INTO `regdata_and_object`(`id_regdata`, `id_object`) 
+                VALUES (:idRegData, :idObject)';
         $result = $db->prepare($sql);
         $result->bindParam(':idRegData', $idRegData, PDO::PARAM_INT);
-        $result->bindParam(':idObjectGroup', $idObjectGroup, PDO::PARAM_INT);
+        $result->bindParam(':idObject', $idObject, PDO::PARAM_INT);
 
         return $result->execute();
     }

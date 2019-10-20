@@ -6,12 +6,12 @@ class RegData
     {
         $db = Db::getConnection();
 
-        $sql = 'SELECT `regdata`.`id_culture`, `culture`.`name_rus`, `min_rate`, `max_rate`, `description`, `waiting_period`, `maxtimes`, `date4machine`, `date4people`
+        $sql = 'SELECT `regdata`.`id_culture`, `regdata`.`id_regdata`, `culture`.`name_rus`, `min_rate`, `max_rate`, `description`, `waiting_period`, `maxtimes`, `date4machine`, `date4people`
                 FROM `product_and_regdata`
                 JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `culture` ON `culture`.`id_culture` = `regdata`.`id_culture`
                 WHERE `product_and_regdata`.`id_product` = :idProduct
-                GROUP BY `regdata`.`id_culture`, `culture`.`name_rus`, `min_rate`, `max_rate`, `description`, `waiting_period`, `maxtimes`, `date4machine`, `date4people`';
+                GROUP BY `regdata`.`id_culture`, `regdata`.`id_regdata`, `culture`.`name_rus`, `min_rate`, `max_rate`, `description`, `waiting_period`, `maxtimes`, `date4machine`, `date4people`';
 /*
 //------------Убрал из запроса последнюю строку и заработало
 GROUP BY `regdata`.`id_culture`;
@@ -27,7 +27,7 @@ GROUP BY `regdata`.`id_culture`;
         return false;
     }
 
-    public static function getListByIdProductAndIdCultureContainObject($idProduct, $idCulture)
+    public static function getListByIdProductAndIdCultureContainObject($idProduct, $idCulture, $idRegdata)
     {
         $db = Db::getConnection();
 
@@ -36,10 +36,11 @@ GROUP BY `regdata`.`id_culture`;
                 JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `regdata_and_grobject` ON `regdata_and_grobject`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `object_group` ON `object_group`.`id_grobject` = `regdata_and_grobject`.`id_grobject`
-                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture;';
+                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture AND `regdata_and_grobject`.`id_regdata` = :idRegdata;';
         $result = $db->prepare($sql);
         $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
         $result->bindParam(':idCulture', $idCulture, PDO::PARAM_INT);
+        $result->bindParam(':idRegdata', $idRegdata, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount()) {
@@ -48,19 +49,27 @@ GROUP BY `regdata`.`id_culture`;
 
         return false;
     }
-    public static function getListByIdProductAndIdCultureContainGroupObject($idProduct, $idCulture)
+    public static function getListByIdProductAndIdCultureContainGroupObject($idProduct, $idCulture, $idRegdata)
     {
         $db = Db::getConnection();
 
         $sql = 'SELECT GROUP_CONCAT(DISTINCT `object`.`rnameobject` ORDER BY `object`.`rnameobject` ASC SEPARATOR ", ") as "names"
+                FROM `object`
+                JOIN `regdata_and_object` ON `regdata_and_object`.`id_object` = `object`.`id_object`
+                JOIN `regdata` ON `regdata_and_object`.`id_regdata` = `regdata`.`id_regdata`
+                JOIN `product_and_regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
+                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture AND `regdata_and_object`.`id_regdata` = :idRegdata';
+/*
                 FROM `product_and_regdata`
                 JOIN `regdata` ON `product_and_regdata`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `regdata_and_object` ON `regdata_and_object`.`id_regdata` = `regdata`.`id_regdata`
                 JOIN `object` ON `object`.`id_object` = `regdata_and_object`.`id_object`
-                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture;';
+                WHERE `product_and_regdata`.`id_product` = :idProduct AND `regdata`.`id_culture` = :idCulture AND `regdata`.`id_regdata` = `regdata_and_object`.`id_regdata`';
+*/
         $result = $db->prepare($sql);
         $result->bindParam(':idProduct', $idProduct, PDO::PARAM_INT);
         $result->bindParam(':idCulture', $idCulture, PDO::PARAM_INT);
+        $result->bindParam(':idRegdata', $idRegdata, PDO::PARAM_INT);
         $result->execute();
 
         if ($result->rowCount()) {

@@ -176,17 +176,18 @@
                         </tr>
                     <?php
                     while ($rowprodsubst = $regDataCultureList->fetch()) { ?>
+                        <?php //print_r($rowprodsubst) ?>
                         <tr>
                             <td colspan="7" class="title-table">
                                 <?php
                                     echo $rowprodsubst["name_rus"]."<br />";
-                                    $namesObject = RegData::getListByIdProductAndIdCultureContainObject($idProduct, $rowprodsubst['id_culture']);
+                                    $namesObject = RegData::getListByIdProductAndIdCultureContainObject($idProduct, $rowprodsubst['id_culture'], $rowprodsubst[1]);
                                 if ($namesObject) { ?>
                                     <span class="object-list-name"><br><?php echo $namesObject; ?></span>
                                 <?php } ?>
                                 <br />
                                 <?php
-                                    $namesGroupObject = RegData::getListByIdProductAndIdCultureContainGroupObject($idProduct, $rowprodsubst['id_culture']);
+                                    $namesGroupObject = RegData::getListByIdProductAndIdCultureContainGroupObject($idProduct, $rowprodsubst['id_culture'], $rowprodsubst[1]);
                                 if ($namesGroupObject) { ?>
                                     <span class="object-list-name"><br><?php echo $namesGroupObject; ?></span>
                                 <?php } ?>
